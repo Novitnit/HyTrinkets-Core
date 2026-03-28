@@ -1,5 +1,8 @@
 package com.Nightingale.command;
 
+import au.ellie.hyui.builders.PageBuilder;
+import com.Nightingale.Ui.EventsGrid;
+import com.Nightingale.Ui.MainPage;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -22,5 +25,11 @@ public class OpenHub extends AbstractPlayerCommand {
     @Override
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
         playerRef.sendMessage(Message.raw("Opening Hub"));
+        PageBuilder page = MainPage.Main(playerRef);
+
+        MainPage.UpdateInventory(playerRef, page);
+        EventsGrid.initEvent(playerRef,page);
+
+        page.open(store);
     }
 }

@@ -52,7 +52,9 @@ def generateManifest = tasks.register('generateManifest') {
   "Authors": [ { "Name": "Nightingale" } ],
   "Website": "*",
   "ServerVersion": "${hytale_build}",
-  "Dependencies": {},
+  "Dependencies": {
+    "Ellie:HyUI": "*"
+  },
   "OptionalDependencies": {},
   "DisabledByDefault": false,
   "Main":${mainFile},
@@ -93,19 +95,21 @@ javadoc {
     options.addStringOption('Xdoclint:-missing', '-quiet')
 }
 
-dependencies {
-    if (hasHytaleHome) {
-        compileOnly(files("$hytaleHome/install/$patchline/package/game/latest/Server/HytaleServer.jar"))
-        runtimeOnly(files("$hytaleHome/install/$patchline/package/game/latest/Server/HytaleServer.jar"))
-    }
-}
-
 repositories {
     mavenCentral()
     maven {
         name "hMReleases"
         url "https://maven.hytale-mods.dev/releases"
     }
+    maven { url "https://www.cursemaven.com" }
+}
+
+dependencies {
+    if (hasHytaleHome) {
+        compileOnly(files("$hytaleHome/install/$patchline/package/game/latest/Server/HytaleServer.jar"))
+        runtimeOnly(files("$hytaleHome/install/$patchline/package/game/latest/Server/HytaleServer.jar"))
+    }
+    implementation "curse.maven:hyui-1431415:7820303"
 }
 
 tasks.named('shadowJar') {
