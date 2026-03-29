@@ -18,7 +18,7 @@ public class OpenHub extends AbstractPlayerCommand {
     public static final String PERMISSION = "hyTrinkets.command.base";
 
     public OpenHub() {
-        super("trinket","Command to Open Hub");
+        super("trinket", "Command to Open Hub");
         this.addAliases("tk");
     }
 
@@ -28,7 +28,7 @@ public class OpenHub extends AbstractPlayerCommand {
         PageBuilder page = MainPage.Main(playerRef);
 
         MainPage.UpdateInventory(playerRef, page);
-        EventsGrid.initEvent(playerRef,page);
+        EventsGrid.initEvent(playerRef, page);
 
         page.open(store);
     }

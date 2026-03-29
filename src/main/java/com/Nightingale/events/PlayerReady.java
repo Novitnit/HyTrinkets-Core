@@ -1,10 +1,8 @@
 package com.Nightingale.events;
 
-import com.Nightingale.HyTrinketPlugin;
-import com.Nightingale.components.TrinketsComponents;
+import com.Nightingale.components.TrinketComponent;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -23,7 +21,7 @@ public class PlayerReady {
             PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
             if(playerRef == null) return;
 
-            TrinketsComponents trinketsComponts = store.ensureAndGetComponent(ref, HyTrinketPlugin.get().getTrinketsComponentsType());
+            TrinketComponent trinketsComponts = store.ensureAndGetComponent(ref, TrinketComponent.getTrinketsComponentType());
             trinketsComponts.loadComponent();
         });
     }

@@ -1,28 +1,29 @@
 package com.Nightingale;
 
-import com.Nightingale.Api.RegisterTrinkets;
+import com.Nightingale.Api.TrinketRegistry;
 import com.Nightingale.command.OpenHub;
-import com.Nightingale.components.TrinketsComponents;
+import com.Nightingale.components.TrinketComponent;
 import com.Nightingale.config.TrinketsConfig;
 import com.Nightingale.events.PlayerReady;
-import com.hypixel.hytale.component.ComponentType;
+import com.Nightingale.events.PreventDeathSystem;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.util.Config;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
+
+import static com.Nightingale.Api.TrinketRegistry.SlotAllowedItems;
 
 public class HyTrinketPlugin extends JavaPlugin {
 
     public static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static HyTrinketPlugin instance;
     public final Config<TrinketsConfig> config;
-    private ComponentType<EntityStore, TrinketsComponents> TrinketsComponentType;
+//    private ComponentType<EntityStore, TrinketsComponents> TrinketsComponentType;
 
     public HyTrinketPlugin(@Nonnull JavaPluginInit init) {
         super(init);
@@ -36,14 +37,20 @@ public class HyTrinketPlugin extends JavaPlugin {
         super.setup();
         LOGGER.atInfo().log("Setting up plugin " + this.getName());
         this.getCommandRegistry().registerCommand(new OpenHub());
+        SlotAllowedItems.clear();
 
-        RegisterTrinkets.RegisterSlot("Ring",2);
-        RegisterTrinkets.RegisterSlot("Necklace",1);
+        // RegisterTrinkets Slots
+        TrinketRegistry.RegisterSlot("Ring", 2);
+        TrinketRegistry.RegisterSlot("Necklace", 1);
+
+        //Register Item
+        TrinketRegistry.RegisterItem("Necklace","ResurrectionCollar");
 
         // EntityStoreRegis
         final var entityStoreRegistry = this.getEntityStoreRegistry();
-        this.TrinketsComponentType = entityStoreRegistry
-                .registerComponent(TrinketsComponents.class, "TrinketsComponents", TrinketsComponents.CODEC);
+        TrinketComponent.setTrinketsComponentType(
+                entityStoreRegistry.registerComponent(TrinketComponent.class, "TrinketsComponents", TrinketComponent.CODEC)
+        );
 
         this.getEventRegistry().registerGlobal(PlayerReadyEvent.class, PlayerReady::handle);
         this.saveConfig();
@@ -52,11 +59,12 @@ public class HyTrinketPlugin extends JavaPlugin {
     @Override
     protected void start() {
         super.start();
-        LOGGER.atInfo().log("Starting plugin " + this.getName());
 
         final Set<String> playerPermissions = Set.of(
                 OpenHub.PERMISSION
         );
+
+        this.getEntityStoreRegistry().registerSystem(new PreventDeathSystem());
 
         try {
             PermissionsModule.get().addGroupPermission("Default", playerPermissions);
@@ -77,11 +85,6 @@ public class HyTrinketPlugin extends JavaPlugin {
     public TrinketsConfig getConfig() {
         return this.config.get();
     }
-
-    public ComponentType<EntityStore, TrinketsComponents> getTrinketsComponentsType() {
-        return TrinketsComponentType;
-    }
-
     static public void Log(String message) {
         LOGGER.atInfo().log(message);
     }

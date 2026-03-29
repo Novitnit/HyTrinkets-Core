@@ -1,17 +1,15 @@
 package com.Nightingale.config;
 
-import com.Nightingale.Api.RegisterTrinkets;
+import com.Nightingale.Api.TrinketRegistry;
 import com.Nightingale.HyTrinketPlugin;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.map.MapCodec;
-import com.hypixel.hytale.logger.HytaleLogger;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class TrinketsConfig {
     private Map<String, Integer> TrinketsSlotsType = new HashMap<String, Integer>();
@@ -36,7 +34,7 @@ public class TrinketsConfig {
     public void cleanSlot() {
         HyTrinketPlugin.Log("Cleaning TrinketsConfig");
         this.TrinketsSlotsType.entrySet().removeIf(entry ->
-                !RegisterTrinkets.TrinketsSlotsType.contains(entry.getKey())
+                !TrinketRegistry.SlotAllowedItems.containsKey(entry.getKey())
         );
     }
 
