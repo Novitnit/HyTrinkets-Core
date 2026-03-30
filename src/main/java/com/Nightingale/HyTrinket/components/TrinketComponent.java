@@ -1,6 +1,6 @@
-package com.Nightingale.components;
+package com.Nightingale.HyTrinket.components;
 
-import com.Nightingale.HyTrinketPlugin;
+import com.Nightingale.HyTrinket.HyTrinketPlugin;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;

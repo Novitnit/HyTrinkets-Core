@@ -1,4 +1,4 @@
-package com.Nightingale.Api;
+package com.Nightingale.HyTrinket.Api;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;

@@ -1,7 +1,7 @@
-package com.Nightingale.config;
+package com.Nightingale.HyTrinket.config;
 
-import com.Nightingale.Api.TrinketRegistry;
-import com.Nightingale.HyTrinketPlugin;
+import com.Nightingale.HyTrinket.Api.TrinketRegistry;
+import com.Nightingale.HyTrinket.HyTrinketPlugin;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;

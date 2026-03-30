@@ -4,14 +4,12 @@ plugins {
     id 'com.gradleup.shadow' version '9.3.1'
 }
 
+import org.codehaus.groovy.runtime.GStringImpl
 import org.gradle.internal.os.OperatingSystem
-
-group = "Nightingale"
-version = "0.0.1"
 
 ext {
     if (project.hasProperty('hytale_home')) {
-        hytaleHome = project.findProperty('hytale_home')
+        hytaleHome = project.findProperty('hytale_home') as GStringImpl
     } else if (System.getenv('HYTALE_HOME')) {
         hytaleHome = System.getenv('HYTALE_HOME')
     } else {
@@ -34,9 +32,9 @@ def generatedResourcesDir = layout.buildDirectory.dir("generated/resources")
 def generateManifest = tasks.register('generateManifest') {
     def outFile = generatedResourcesDir.map { it.file("manifest.json") }
 
-    inputs.property("group", project.group.toString())
+    inputs.property("group", GROUP.toString())
+    inputs.property("version", VERSION.toString())
     inputs.property("name", rootProject.name)
-    inputs.property("version", project.version.toString())
     inputs.property("hytale_build", hytale_build.toString())
 
     outputs.file(outFile)
@@ -46,10 +44,10 @@ def generateManifest = tasks.register('generateManifest') {
         f.parentFile.mkdirs()
 
         def json = """{
-  "Group": "${project.group}",
+  "Group": "${GROUP.toString()}",
   "Name": "${rootProject.name}",
-  "Version": "${project.version}",
-  "Authors": [ { "Name": "Nightingale" } ],
+  "Version": "${VERSION.toString()}",
+  "Authors": ${Authors.toString()},
   "Website": "*",
   "ServerVersion": "${hytale_build}",
   "Dependencies": {
@@ -57,8 +55,8 @@ def generateManifest = tasks.register('generateManifest') {
   },
   "OptionalDependencies": {},
   "DisabledByDefault": false,
-  "Main":${mainFile},
-  "IncludesAssetPack": ${includes_pack.toString()}
+  "Main":"${mainFile.toString()}",
+  "IncludesAssetPack": true
 }
 """ + "\n"
 
@@ -86,7 +84,7 @@ if (!hasHytaleHome) {
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
     withSourcesJar()
     withJavadocJar()
 }
@@ -105,16 +103,21 @@ repositories {
 }
 
 dependencies {
+    compileOnly("com.hypixel.hytale:Server:+")
     if (hasHytaleHome) {
-        compileOnly(files("$hytaleHome/install/$patchline/package/game/latest/Server/HytaleServer.jar"))
-        runtimeOnly(files("$hytaleHome/install/$patchline/package/game/latest/Server/HytaleServer.jar"))
+        runtimeOnly(files("$hytaleHome/install/release/package/game/latest/Server/HytaleServer.jar"))
     }
     implementation "curse.maven:hyui-1431415:7820303"
+}
+
+tasks.named('sourcesJar') {
+    dependsOn generateManifest
 }
 
 tasks.named('shadowJar') {
     archiveClassifier.set('')
     mergeServiceFiles()
+    exclude 'META-INF/services/**'
 }
 
 tasks.named('build') {

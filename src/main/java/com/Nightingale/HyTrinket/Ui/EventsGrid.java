@@ -1,12 +1,11 @@
-package com.Nightingale.Ui;
+package com.Nightingale.HyTrinket.Ui;
 
 import au.ellie.hyui.builders.PageBuilder;
 import au.ellie.hyui.events.SlotClickingEventData;
 import au.ellie.hyui.events.UIContext;
-import com.Nightingale.Api.TrinketRegistry;
-import com.Nightingale.Api.TrinketCallback;
-import com.Nightingale.HyTrinketPlugin;
-import com.Nightingale.components.TrinketComponent;
+import com.Nightingale.HyTrinket.Api.TrinketRegistry;
+import com.Nightingale.HyTrinket.Api.TrinketCallback;
+import com.Nightingale.HyTrinket.components.TrinketComponent;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;

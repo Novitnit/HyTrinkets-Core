@@ -1,6 +1,6 @@
-package com.Nightingale.Api;
+package com.Nightingale.HyTrinket.Api;
 
-import com.Nightingale.HyTrinketPlugin;
+import com.Nightingale.HyTrinket.HyTrinketPlugin;
 
 import java.util.*;
 

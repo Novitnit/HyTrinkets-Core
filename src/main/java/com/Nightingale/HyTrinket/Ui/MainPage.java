@@ -1,10 +1,10 @@
-package com.Nightingale.Ui;
+package com.Nightingale.HyTrinket.Ui;
 
 import au.ellie.hyui.builders.*;
 import au.ellie.hyui.types.ItemGridStyle;
 import au.ellie.hyui.types.LayoutMode;
-import com.Nightingale.components.TrinketComponent;
-import com.Nightingale.components.TrinketSlot;
+import com.Nightingale.HyTrinket.components.TrinketComponent;
+import com.Nightingale.HyTrinket.components.TrinketSlot;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;

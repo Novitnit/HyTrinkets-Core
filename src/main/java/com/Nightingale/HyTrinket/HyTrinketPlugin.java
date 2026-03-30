@@ -1,11 +1,9 @@
-package com.Nightingale;
-
-import com.Nightingale.Api.TrinketRegistry;
-import com.Nightingale.command.OpenHub;
-import com.Nightingale.components.TrinketComponent;
-import com.Nightingale.config.TrinketsConfig;
-import com.Nightingale.events.PlayerReady;
-import com.Nightingale.events.PreventDeathSystem;
+package com.Nightingale.HyTrinket;
+import com.Nightingale.HyTrinket.Api.TrinketRegistry;
+import com.Nightingale.HyTrinket.command.OpenHub;
+import com.Nightingale.HyTrinket.components.TrinketComponent;
+import com.Nightingale.HyTrinket.config.TrinketsConfig;
+import com.Nightingale.HyTrinket.events.PlayerReady;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.permissions.PermissionsModule;
@@ -16,7 +14,7 @@ import com.hypixel.hytale.server.core.util.Config;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
-import static com.Nightingale.Api.TrinketRegistry.SlotAllowedItems;
+import static com.Nightingale.HyTrinket.Api.TrinketRegistry.SlotAllowedItems;
 
 public class HyTrinketPlugin extends JavaPlugin {
 
@@ -43,9 +41,6 @@ public class HyTrinketPlugin extends JavaPlugin {
         TrinketRegistry.RegisterSlot("Ring", 2);
         TrinketRegistry.RegisterSlot("Necklace", 1);
 
-        //Register Item
-        TrinketRegistry.RegisterItem("Necklace","ResurrectionCollar");
-
         // EntityStoreRegis
         final var entityStoreRegistry = this.getEntityStoreRegistry();
         TrinketComponent.setTrinketsComponentType(
@@ -63,8 +58,6 @@ public class HyTrinketPlugin extends JavaPlugin {
         final Set<String> playerPermissions = Set.of(
                 OpenHub.PERMISSION
         );
-
-        this.getEntityStoreRegistry().registerSystem(new PreventDeathSystem());
 
         try {
             PermissionsModule.get().addGroupPermission("Default", playerPermissions);
