@@ -54,7 +54,7 @@ public class HyTrinketPlugin extends JavaPlugin {
     @Override
     protected void start() {
         super.start();
-
+        TrinketRegistry.RegisterAll();
         final Set<String> playerPermissions = Set.of(
                 OpenHub.PERMISSION
         );
